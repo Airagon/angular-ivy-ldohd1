@@ -1,0 +1,27 @@
+<div id="wrapper">
+  <zxing-scanner
+    id="scanner"
+    (scanSuccess)="onCodeResult($event)"
+    (scanSuccess)="scanSuccessHandler($event)"
+    [enable]="scannerEnabled"
+  >
+  </zxing-scanner>
+
+  <div *ngIf="!scannerEnabled && !scannerHasResult" id="scannerOverlay"></div>
+  <div *ngIf="scannerHasResult && correctResult" id="scannerSuccess"></div>
+  <div *ngIf="scannerHasResult && !correctResult" id="scannerFail"></div>
+
+  <!-- <div id="checkDiv"></div> -->
+
+  <div *ngIf="shownButton === 0" class="mainButton" (click)="enableScanner()">
+    <div id="label">SCAN</div>
+  </div>
+
+  <div *ngIf="shownButton === 1" class="mainButton" (click)="disableScanner()">
+    <div id="label">STOP</div>
+  </div>
+
+  <div *ngIf="shownButton === 2" class="mainButton" (click)="reScan()">
+    <div id="label">CONFIRM</div>
+  </div>
+</div>
