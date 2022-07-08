@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as CryptoJS from 'crypto-js';
+import QR_Service from 'src/app/qr-service';
 
 @Component({
   selector: 'app-root',
@@ -7,6 +8,8 @@ import * as CryptoJS from 'crypto-js';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
+  constructor(private QRservice: QR_Service) {}
+
   title = 'vikelaia-qr-scanner';
   qrResultString: string;
   shownButton = Buttons.SCAN;
@@ -52,7 +55,11 @@ export class AppComponent implements OnInit {
     this.scannerHasResult = true;
 
     if (this.conversionDecryptOutput === this.encryptText) {
-      this.correctResult = true;
+      this.QRservice.getQR.subscribe((response) => {
+        if (response === true) {
+          this.correctResult = true;
+        } else this.correctResult = false;
+      });
     } else this.correctResult = false;
 
     this.shownButton = Buttons.CONFIRM;
